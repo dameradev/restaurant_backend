@@ -1,7 +1,7 @@
-const crypto = require('crypto');
+const crypto = require("crypto");
 const randomString = () => crypto.randomBytes(6).hexSlice();
 
-module.exports = async keystone => {
+module.exports = async (keystone) => {
   // Count existing users
   const {
     data: {
@@ -17,9 +17,10 @@ module.exports = async keystone => {
   });
 
   if (count === 0) {
-    const password = randomString();
-    const email = 'admin@example.com';
+    const password = "damjan12";
+    const email = "admin@example.com";
 
+    // console.log(password);
     const { errors } = await keystone.executeGraphQL({
       context: keystone.createContext({ skipAccessControl: true }),
       query: `mutation initialUser($password: String, $email: String) {
@@ -31,7 +32,7 @@ module.exports = async keystone => {
     });
 
     if (errors) {
-      console.log('failed to create initial user:');
+      console.log("failed to create initial user:");
       console.log(errors);
     } else {
       console.log(`

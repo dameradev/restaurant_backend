@@ -1,4 +1,4 @@
-const { Text, Checkbox } = require("@keystonejs/fields");
+const { Text, Checkbox, Relationship } = require("@keystonejs/fields");
 
 module.exports = {
   fields: {
@@ -15,5 +15,6 @@ module.exports = {
       type: Checkbox,
       defaultValue: false,
     },
+    tables: { type: Relationship, ref: "Table.restaurant", many: true },
   },
 };
