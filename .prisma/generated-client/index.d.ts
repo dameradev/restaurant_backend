@@ -259,8 +259,8 @@ export declare function getLogLevel(log: Array<LogLevel | LogDefinition>): LogLe
  * @example
  * ```
  * const prisma = new PrismaClient()
- * // Fetch zero or more Restaurants
- * const restaurants = await prisma.restaurant.findMany()
+ * // Fetch zero or more Users
+ * const users = await prisma.user.findMany()
  * ```
  *
  * 
@@ -310,8 +310,8 @@ export declare class PrismaClient<
    * @example
    * ```
    * const prisma = new PrismaClient()
-   * // Fetch zero or more Restaurants
-   * const restaurants = await prisma.restaurant.findMany()
+   * // Fetch zero or more Users
+   * const users = await prisma.user.findMany()
    * ```
    *
    * 
@@ -401,6 +401,16 @@ export declare class PrismaClient<
   transaction: PromiseConstructor['all']
 
   /**
+   * `prisma.user`: Exposes CRUD operations for the **User** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Users
+    * const users = await prisma.user.findMany()
+    * ```
+    */
+  get user(): UserDelegate;
+
+  /**
    * `prisma.restaurant`: Exposes CRUD operations for the **Restaurant** model.
     * Example usage:
     * ```ts
@@ -429,16 +439,6 @@ export declare class PrismaClient<
     * ```
     */
   get customer(): CustomerDelegate;
-
-  /**
-   * `prisma.user`: Exposes CRUD operations for the **User** model.
-    * Example usage:
-    * ```ts
-    * // Fetch zero or more Users
-    * const users = await prisma.user.findMany()
-    * ```
-    */
-  get user(): UserDelegate;
 }
 
 
@@ -451,13 +451,24 @@ export declare class PrismaClient<
 // https://github.com/microsoft/TypeScript/issues/3192#issuecomment-261720275
 
 export declare const ModelName: {
+  User: 'User',
   Restaurant: 'Restaurant',
   Table: 'Table',
-  Customer: 'Customer',
-  User: 'User'
+  Customer: 'Customer'
 };
 
 export declare type ModelName = (typeof ModelName)[keyof typeof ModelName]
+
+
+export declare const UserDistinctFieldEnum: {
+  id: 'id',
+  name: 'name',
+  email: 'email',
+  isAdmin: 'isAdmin',
+  password: 'password'
+};
+
+export declare type UserDistinctFieldEnum = (typeof UserDistinctFieldEnum)[keyof typeof UserDistinctFieldEnum]
 
 
 export declare const RestaurantDistinctFieldEnum: {
@@ -483,21 +494,12 @@ export declare type TableDistinctFieldEnum = (typeof TableDistinctFieldEnum)[key
 
 export declare const CustomerDistinctFieldEnum: {
   id: 'id',
-  name: 'name'
+  name: 'name',
+  reservationTime_utc: 'reservationTime_utc',
+  reservationTime_offset: 'reservationTime_offset'
 };
 
 export declare type CustomerDistinctFieldEnum = (typeof CustomerDistinctFieldEnum)[keyof typeof CustomerDistinctFieldEnum]
-
-
-export declare const UserDistinctFieldEnum: {
-  id: 'id',
-  name: 'name',
-  email: 'email',
-  isAdmin: 'isAdmin',
-  password: 'password'
-};
-
-export declare type UserDistinctFieldEnum = (typeof UserDistinctFieldEnum)[keyof typeof UserDistinctFieldEnum]
 
 
 export declare const SortOrder: {
@@ -514,6 +516,486 @@ export declare const QueryMode: {
 };
 
 export declare type QueryMode = (typeof QueryMode)[keyof typeof QueryMode]
+
+
+
+/**
+ * Model User
+ */
+
+export type User = {
+  id: number
+  name: string | null
+  email: string | null
+  isAdmin: boolean | null
+  password: string | null
+}
+
+
+export type AggregateUser = {
+  count: number
+  avg: UserAvgAggregateOutputType | null
+  sum: UserSumAggregateOutputType | null
+  min: UserMinAggregateOutputType | null
+  max: UserMaxAggregateOutputType | null
+}
+
+export type UserAvgAggregateOutputType = {
+  id: number
+}
+
+export type UserSumAggregateOutputType = {
+  id: number
+}
+
+export type UserMinAggregateOutputType = {
+  id: number
+}
+
+export type UserMaxAggregateOutputType = {
+  id: number
+}
+
+
+export type UserAvgAggregateInputType = {
+  id?: true
+}
+
+export type UserSumAggregateInputType = {
+  id?: true
+}
+
+export type UserMinAggregateInputType = {
+  id?: true
+}
+
+export type UserMaxAggregateInputType = {
+  id?: true
+}
+
+export type AggregateUserArgs = {
+  where?: UserWhereInput
+  orderBy?: XOR<Enumerable<UserOrderByInput>, UserOrderByInput>
+  cursor?: UserWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Enumerable<UserDistinctFieldEnum>
+  count?: true
+  avg?: UserAvgAggregateInputType
+  sum?: UserSumAggregateInputType
+  min?: UserMinAggregateInputType
+  max?: UserMaxAggregateInputType
+}
+
+export type GetUserAggregateType<T extends AggregateUserArgs> = {
+  [P in keyof T]: P extends 'count' ? number : GetUserAggregateScalarType<T[P]>
+}
+
+export type GetUserAggregateScalarType<T extends any> = {
+  [P in keyof T]: P extends keyof UserAvgAggregateOutputType ? UserAvgAggregateOutputType[P] : never
+}
+    
+    
+
+export type UserSelect = {
+  id?: boolean
+  name?: boolean
+  email?: boolean
+  isAdmin?: boolean
+  password?: boolean
+}
+
+export type UserGetPayload<
+  S extends boolean | null | undefined | UserArgs,
+  U = keyof S
+> = S extends true
+  ? User
+  : S extends undefined
+  ? never
+  : S extends UserArgs | FindManyUserArgs
+  ? 'include' extends U
+    ? User 
+  : 'select' extends U
+    ? {
+      [P in TrueKeys<S['select']>]:P extends keyof User ? User[P]
+: 
+ never
+    }
+  : User
+: User
+
+
+export interface UserDelegate {
+  /**
+   * Find zero or one User that matches the filter.
+   * @param {FindOneUserArgs} args - Arguments to find a User
+   * @example
+   * // Get one User
+   * const user = await prisma.user.findOne({
+   *   where: {
+   *     // ... provide filter here
+   *   }
+   * })
+  **/
+  findOne<T extends FindOneUserArgs>(
+    args: Subset<T, FindOneUserArgs>
+  ): CheckSelect<T, Prisma__UserClient<User | null>, Prisma__UserClient<UserGetPayload<T> | null>>
+  /**
+   * Find the first User that matches the filter.
+   * @param {FindFirstUserArgs} args - Arguments to find a User
+   * @example
+   * // Get one User
+   * const user = await prisma.user.findFirst({
+   *   where: {
+   *     // ... provide filter here
+   *   }
+   * })
+  **/
+  findFirst<T extends FindFirstUserArgs>(
+    args?: Subset<T, FindFirstUserArgs>
+  ): CheckSelect<T, Prisma__UserClient<User | null>, Prisma__UserClient<UserGetPayload<T> | null>>
+  /**
+   * Find zero or more Users that matches the filter.
+   * @param {FindManyUserArgs=} args - Arguments to filter and select certain fields only.
+   * @example
+   * // Get all Users
+   * const users = await prisma.user.findMany()
+   * 
+   * // Get first 10 Users
+   * const users = await prisma.user.findMany({ take: 10 })
+   * 
+   * // Only select the `id`
+   * const userWithIdOnly = await prisma.user.findMany({ select: { id: true } })
+   * 
+  **/
+  findMany<T extends FindManyUserArgs>(
+    args?: Subset<T, FindManyUserArgs>
+  ): CheckSelect<T, Promise<Array<User>>, Promise<Array<UserGetPayload<T>>>>
+  /**
+   * Create a User.
+   * @param {UserCreateArgs} args - Arguments to create a User.
+   * @example
+   * // Create one User
+   * const User = await prisma.user.create({
+   *   data: {
+   *     // ... data to create a User
+   *   }
+   * })
+   * 
+  **/
+  create<T extends UserCreateArgs>(
+    args: Subset<T, UserCreateArgs>
+  ): CheckSelect<T, Prisma__UserClient<User>, Prisma__UserClient<UserGetPayload<T>>>
+  /**
+   * Delete a User.
+   * @param {UserDeleteArgs} args - Arguments to delete one User.
+   * @example
+   * // Delete one User
+   * const User = await prisma.user.delete({
+   *   where: {
+   *     // ... filter to delete one User
+   *   }
+   * })
+   * 
+  **/
+  delete<T extends UserDeleteArgs>(
+    args: Subset<T, UserDeleteArgs>
+  ): CheckSelect<T, Prisma__UserClient<User>, Prisma__UserClient<UserGetPayload<T>>>
+  /**
+   * Update one User.
+   * @param {UserUpdateArgs} args - Arguments to update one User.
+   * @example
+   * // Update one User
+   * const user = await prisma.user.update({
+   *   where: {
+   *     // ... provide filter here
+   *   },
+   *   data: {
+   *     // ... provide data here
+   *   }
+   * })
+   * 
+  **/
+  update<T extends UserUpdateArgs>(
+    args: Subset<T, UserUpdateArgs>
+  ): CheckSelect<T, Prisma__UserClient<User>, Prisma__UserClient<UserGetPayload<T>>>
+  /**
+   * Delete zero or more Users.
+   * @param {UserDeleteManyArgs} args - Arguments to filter Users to delete.
+   * @example
+   * // Delete a few Users
+   * const { count } = await prisma.user.deleteMany({
+   *   where: {
+   *     // ... provide filter here
+   *   }
+   * })
+   * 
+  **/
+  deleteMany<T extends UserDeleteManyArgs>(
+    args: Subset<T, UserDeleteManyArgs>
+  ): Promise<BatchPayload>
+  /**
+   * Update zero or more Users.
+   * @param {UserUpdateManyArgs} args - Arguments to update one or more rows.
+   * @example
+   * // Update many Users
+   * const user = await prisma.user.updateMany({
+   *   where: {
+   *     // ... provide filter here
+   *   },
+   *   data: {
+   *     // ... provide data here
+   *   }
+   * })
+   * 
+  **/
+  updateMany<T extends UserUpdateManyArgs>(
+    args: Subset<T, UserUpdateManyArgs>
+  ): Promise<BatchPayload>
+  /**
+   * Create or update one User.
+   * @param {UserUpsertArgs} args - Arguments to update or create a User.
+   * @example
+   * // Update or create a User
+   * const user = await prisma.user.upsert({
+   *   create: {
+   *     // ... data to create a User
+   *   },
+   *   update: {
+   *     // ... in case it already exists, update
+   *   },
+   *   where: {
+   *     // ... the filter for the User we want to update
+   *   }
+   * })
+  **/
+  upsert<T extends UserUpsertArgs>(
+    args: Subset<T, UserUpsertArgs>
+  ): CheckSelect<T, Prisma__UserClient<User>, Prisma__UserClient<UserGetPayload<T>>>
+  /**
+   * Count
+   */
+  count(args?: Omit<FindManyUserArgs, 'select' | 'include'>): Promise<number>
+
+  /**
+   * Aggregate
+   */
+  aggregate<T extends AggregateUserArgs>(args: Subset<T, AggregateUserArgs>): Promise<GetUserAggregateType<T>>
+}
+
+/**
+ * The delegate class that acts as a "Promise-like" for User.
+ * Why is this prefixed with `Prisma__`?
+ * Because we want to prevent naming conflicts as mentioned in 
+ * https://github.com/prisma/prisma-client-js/issues/707
+ */
+export declare class Prisma__UserClient<T> implements Promise<T> {
+  private readonly _dmmf;
+  private readonly _fetcher;
+  private readonly _queryType;
+  private readonly _rootField;
+  private readonly _clientMethod;
+  private readonly _args;
+  private readonly _dataPath;
+  private readonly _errorFormat;
+  private readonly _measurePerformance?;
+  private _isList;
+  private _callsite;
+  private _requestPromise?;
+  constructor(_dmmf: DMMFClass, _fetcher: PrismaClientFetcher, _queryType: 'query' | 'mutation', _rootField: string, _clientMethod: string, _args: any, _dataPath: string[], _errorFormat: ErrorFormat, _measurePerformance?: boolean | undefined, _isList?: boolean);
+  readonly [Symbol.toStringTag]: 'PrismaClientPromise';
+
+
+  private get _document();
+  /**
+   * Attaches callbacks for the resolution and/or rejection of the Promise.
+   * @param onfulfilled The callback to execute when the Promise is resolved.
+   * @param onrejected The callback to execute when the Promise is rejected.
+   * @returns A Promise for the completion of which ever callback is executed.
+   */
+  then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | Promise<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | Promise<TResult2>) | undefined | null): Promise<TResult1 | TResult2>;
+  /**
+   * Attaches a callback for only the rejection of the Promise.
+   * @param onrejected The callback to execute when the Promise is rejected.
+   * @returns A Promise for the completion of the callback.
+   */
+  catch<TResult = never>(onrejected?: ((reason: any) => TResult | Promise<TResult>) | undefined | null): Promise<T | TResult>;
+  /**
+   * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+   * resolved value cannot be modified from the callback.
+   * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+   * @returns A Promise for the completion of the callback.
+   */
+  finally(onfinally?: (() => void) | undefined | null): Promise<T>;
+}
+
+// Custom InputTypes
+
+/**
+ * User findOne
+ */
+export type FindOneUserArgs = {
+  /**
+   * Select specific fields to fetch from the User
+  **/
+  select?: XOR<UserSelect, null>
+  /**
+   * Filter, which User to fetch.
+  **/
+  where: UserWhereUniqueInput
+}
+
+
+/**
+ * User findFirst
+ */
+export type FindFirstUserArgs = {
+  /**
+   * Select specific fields to fetch from the User
+  **/
+  select?: XOR<UserSelect, null>
+  /**
+   * Filter, which User to fetch.
+  **/
+  where?: UserWhereInput
+  orderBy?: XOR<Enumerable<UserOrderByInput>, UserOrderByInput>
+  cursor?: UserWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Enumerable<UserDistinctFieldEnum>
+}
+
+
+/**
+ * User findMany
+ */
+export type FindManyUserArgs = {
+  /**
+   * Select specific fields to fetch from the User
+  **/
+  select?: XOR<UserSelect, null>
+  /**
+   * Filter, which Users to fetch.
+  **/
+  where?: UserWhereInput
+  /**
+   * Determine the order of the Users to fetch.
+  **/
+  orderBy?: XOR<Enumerable<UserOrderByInput>, UserOrderByInput>
+  /**
+   * Sets the position for listing Users.
+  **/
+  cursor?: UserWhereUniqueInput
+  /**
+   * The number of Users to fetch. If negative number, it will take Users before the `cursor`.
+  **/
+  take?: number
+  /**
+   * Skip the first `n` Users.
+  **/
+  skip?: number
+  distinct?: Enumerable<UserDistinctFieldEnum>
+}
+
+
+/**
+ * User create
+ */
+export type UserCreateArgs = {
+  /**
+   * Select specific fields to fetch from the User
+  **/
+  select?: XOR<UserSelect, null>
+  /**
+   * The data needed to create a User.
+  **/
+  data: UserCreateInput
+}
+
+
+/**
+ * User update
+ */
+export type UserUpdateArgs = {
+  /**
+   * Select specific fields to fetch from the User
+  **/
+  select?: XOR<UserSelect, null>
+  /**
+   * The data needed to update a User.
+  **/
+  data: UserUpdateInput
+  /**
+   * Choose, which User to update.
+  **/
+  where: UserWhereUniqueInput
+}
+
+
+/**
+ * User updateMany
+ */
+export type UserUpdateManyArgs = {
+  data: UserUpdateManyMutationInput
+  where?: UserWhereInput
+}
+
+
+/**
+ * User upsert
+ */
+export type UserUpsertArgs = {
+  /**
+   * Select specific fields to fetch from the User
+  **/
+  select?: XOR<UserSelect, null>
+  /**
+   * The filter to search for the User to update in case it exists.
+  **/
+  where: UserWhereUniqueInput
+  /**
+   * In case the User found by the `where` argument doesn't exist, create a new User with this data.
+  **/
+  create: UserCreateInput
+  /**
+   * In case the User was found with the provided `where` argument, update it with this data.
+  **/
+  update: UserUpdateInput
+}
+
+
+/**
+ * User delete
+ */
+export type UserDeleteArgs = {
+  /**
+   * Select specific fields to fetch from the User
+  **/
+  select?: XOR<UserSelect, null>
+  /**
+   * Filter which User to delete.
+  **/
+  where: UserWhereUniqueInput
+}
+
+
+/**
+ * User deleteMany
+ */
+export type UserDeleteManyArgs = {
+  where?: UserWhereInput
+}
+
+
+/**
+ * User without action
+ */
+export type UserArgs = {
+  /**
+   * Select specific fields to fetch from the User
+  **/
+  select?: XOR<UserSelect, null>
+}
 
 
 
@@ -1600,6 +2082,8 @@ export type TableArgs = {
 export type Customer = {
   id: number
   name: string | null
+  reservationTime_utc: Date | null
+  reservationTime_offset: string | null
 }
 
 
@@ -1671,6 +2155,8 @@ export type GetCustomerAggregateScalarType<T extends any> = {
 export type CustomerSelect = {
   id?: boolean
   name?: boolean
+  reservationTime_utc?: boolean
+  reservationTime_offset?: boolean
   from_customer?: boolean | FindManyTableArgs
 }
 
@@ -2111,489 +2597,33 @@ export type CustomerArgs = {
 
 
 /**
- * Model User
- */
-
-export type User = {
-  id: number
-  name: string | null
-  email: string | null
-  isAdmin: boolean | null
-  password: string | null
-}
-
-
-export type AggregateUser = {
-  count: number
-  avg: UserAvgAggregateOutputType | null
-  sum: UserSumAggregateOutputType | null
-  min: UserMinAggregateOutputType | null
-  max: UserMaxAggregateOutputType | null
-}
-
-export type UserAvgAggregateOutputType = {
-  id: number
-}
-
-export type UserSumAggregateOutputType = {
-  id: number
-}
-
-export type UserMinAggregateOutputType = {
-  id: number
-}
-
-export type UserMaxAggregateOutputType = {
-  id: number
-}
-
-
-export type UserAvgAggregateInputType = {
-  id?: true
-}
-
-export type UserSumAggregateInputType = {
-  id?: true
-}
-
-export type UserMinAggregateInputType = {
-  id?: true
-}
-
-export type UserMaxAggregateInputType = {
-  id?: true
-}
-
-export type AggregateUserArgs = {
-  where?: UserWhereInput
-  orderBy?: XOR<Enumerable<UserOrderByInput>, UserOrderByInput>
-  cursor?: UserWhereUniqueInput
-  take?: number
-  skip?: number
-  distinct?: Enumerable<UserDistinctFieldEnum>
-  count?: true
-  avg?: UserAvgAggregateInputType
-  sum?: UserSumAggregateInputType
-  min?: UserMinAggregateInputType
-  max?: UserMaxAggregateInputType
-}
-
-export type GetUserAggregateType<T extends AggregateUserArgs> = {
-  [P in keyof T]: P extends 'count' ? number : GetUserAggregateScalarType<T[P]>
-}
-
-export type GetUserAggregateScalarType<T extends any> = {
-  [P in keyof T]: P extends keyof UserAvgAggregateOutputType ? UserAvgAggregateOutputType[P] : never
-}
-    
-    
-
-export type UserSelect = {
-  id?: boolean
-  name?: boolean
-  email?: boolean
-  isAdmin?: boolean
-  password?: boolean
-}
-
-export type UserGetPayload<
-  S extends boolean | null | undefined | UserArgs,
-  U = keyof S
-> = S extends true
-  ? User
-  : S extends undefined
-  ? never
-  : S extends UserArgs | FindManyUserArgs
-  ? 'include' extends U
-    ? User 
-  : 'select' extends U
-    ? {
-      [P in TrueKeys<S['select']>]:P extends keyof User ? User[P]
-: 
- never
-    }
-  : User
-: User
-
-
-export interface UserDelegate {
-  /**
-   * Find zero or one User that matches the filter.
-   * @param {FindOneUserArgs} args - Arguments to find a User
-   * @example
-   * // Get one User
-   * const user = await prisma.user.findOne({
-   *   where: {
-   *     // ... provide filter here
-   *   }
-   * })
-  **/
-  findOne<T extends FindOneUserArgs>(
-    args: Subset<T, FindOneUserArgs>
-  ): CheckSelect<T, Prisma__UserClient<User | null>, Prisma__UserClient<UserGetPayload<T> | null>>
-  /**
-   * Find the first User that matches the filter.
-   * @param {FindFirstUserArgs} args - Arguments to find a User
-   * @example
-   * // Get one User
-   * const user = await prisma.user.findFirst({
-   *   where: {
-   *     // ... provide filter here
-   *   }
-   * })
-  **/
-  findFirst<T extends FindFirstUserArgs>(
-    args?: Subset<T, FindFirstUserArgs>
-  ): CheckSelect<T, Prisma__UserClient<User | null>, Prisma__UserClient<UserGetPayload<T> | null>>
-  /**
-   * Find zero or more Users that matches the filter.
-   * @param {FindManyUserArgs=} args - Arguments to filter and select certain fields only.
-   * @example
-   * // Get all Users
-   * const users = await prisma.user.findMany()
-   * 
-   * // Get first 10 Users
-   * const users = await prisma.user.findMany({ take: 10 })
-   * 
-   * // Only select the `id`
-   * const userWithIdOnly = await prisma.user.findMany({ select: { id: true } })
-   * 
-  **/
-  findMany<T extends FindManyUserArgs>(
-    args?: Subset<T, FindManyUserArgs>
-  ): CheckSelect<T, Promise<Array<User>>, Promise<Array<UserGetPayload<T>>>>
-  /**
-   * Create a User.
-   * @param {UserCreateArgs} args - Arguments to create a User.
-   * @example
-   * // Create one User
-   * const User = await prisma.user.create({
-   *   data: {
-   *     // ... data to create a User
-   *   }
-   * })
-   * 
-  **/
-  create<T extends UserCreateArgs>(
-    args: Subset<T, UserCreateArgs>
-  ): CheckSelect<T, Prisma__UserClient<User>, Prisma__UserClient<UserGetPayload<T>>>
-  /**
-   * Delete a User.
-   * @param {UserDeleteArgs} args - Arguments to delete one User.
-   * @example
-   * // Delete one User
-   * const User = await prisma.user.delete({
-   *   where: {
-   *     // ... filter to delete one User
-   *   }
-   * })
-   * 
-  **/
-  delete<T extends UserDeleteArgs>(
-    args: Subset<T, UserDeleteArgs>
-  ): CheckSelect<T, Prisma__UserClient<User>, Prisma__UserClient<UserGetPayload<T>>>
-  /**
-   * Update one User.
-   * @param {UserUpdateArgs} args - Arguments to update one User.
-   * @example
-   * // Update one User
-   * const user = await prisma.user.update({
-   *   where: {
-   *     // ... provide filter here
-   *   },
-   *   data: {
-   *     // ... provide data here
-   *   }
-   * })
-   * 
-  **/
-  update<T extends UserUpdateArgs>(
-    args: Subset<T, UserUpdateArgs>
-  ): CheckSelect<T, Prisma__UserClient<User>, Prisma__UserClient<UserGetPayload<T>>>
-  /**
-   * Delete zero or more Users.
-   * @param {UserDeleteManyArgs} args - Arguments to filter Users to delete.
-   * @example
-   * // Delete a few Users
-   * const { count } = await prisma.user.deleteMany({
-   *   where: {
-   *     // ... provide filter here
-   *   }
-   * })
-   * 
-  **/
-  deleteMany<T extends UserDeleteManyArgs>(
-    args: Subset<T, UserDeleteManyArgs>
-  ): Promise<BatchPayload>
-  /**
-   * Update zero or more Users.
-   * @param {UserUpdateManyArgs} args - Arguments to update one or more rows.
-   * @example
-   * // Update many Users
-   * const user = await prisma.user.updateMany({
-   *   where: {
-   *     // ... provide filter here
-   *   },
-   *   data: {
-   *     // ... provide data here
-   *   }
-   * })
-   * 
-  **/
-  updateMany<T extends UserUpdateManyArgs>(
-    args: Subset<T, UserUpdateManyArgs>
-  ): Promise<BatchPayload>
-  /**
-   * Create or update one User.
-   * @param {UserUpsertArgs} args - Arguments to update or create a User.
-   * @example
-   * // Update or create a User
-   * const user = await prisma.user.upsert({
-   *   create: {
-   *     // ... data to create a User
-   *   },
-   *   update: {
-   *     // ... in case it already exists, update
-   *   },
-   *   where: {
-   *     // ... the filter for the User we want to update
-   *   }
-   * })
-  **/
-  upsert<T extends UserUpsertArgs>(
-    args: Subset<T, UserUpsertArgs>
-  ): CheckSelect<T, Prisma__UserClient<User>, Prisma__UserClient<UserGetPayload<T>>>
-  /**
-   * Count
-   */
-  count(args?: Omit<FindManyUserArgs, 'select' | 'include'>): Promise<number>
-
-  /**
-   * Aggregate
-   */
-  aggregate<T extends AggregateUserArgs>(args: Subset<T, AggregateUserArgs>): Promise<GetUserAggregateType<T>>
-}
-
-/**
- * The delegate class that acts as a "Promise-like" for User.
- * Why is this prefixed with `Prisma__`?
- * Because we want to prevent naming conflicts as mentioned in 
- * https://github.com/prisma/prisma-client-js/issues/707
- */
-export declare class Prisma__UserClient<T> implements Promise<T> {
-  private readonly _dmmf;
-  private readonly _fetcher;
-  private readonly _queryType;
-  private readonly _rootField;
-  private readonly _clientMethod;
-  private readonly _args;
-  private readonly _dataPath;
-  private readonly _errorFormat;
-  private readonly _measurePerformance?;
-  private _isList;
-  private _callsite;
-  private _requestPromise?;
-  constructor(_dmmf: DMMFClass, _fetcher: PrismaClientFetcher, _queryType: 'query' | 'mutation', _rootField: string, _clientMethod: string, _args: any, _dataPath: string[], _errorFormat: ErrorFormat, _measurePerformance?: boolean | undefined, _isList?: boolean);
-  readonly [Symbol.toStringTag]: 'PrismaClientPromise';
-
-
-  private get _document();
-  /**
-   * Attaches callbacks for the resolution and/or rejection of the Promise.
-   * @param onfulfilled The callback to execute when the Promise is resolved.
-   * @param onrejected The callback to execute when the Promise is rejected.
-   * @returns A Promise for the completion of which ever callback is executed.
-   */
-  then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | Promise<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | Promise<TResult2>) | undefined | null): Promise<TResult1 | TResult2>;
-  /**
-   * Attaches a callback for only the rejection of the Promise.
-   * @param onrejected The callback to execute when the Promise is rejected.
-   * @returns A Promise for the completion of the callback.
-   */
-  catch<TResult = never>(onrejected?: ((reason: any) => TResult | Promise<TResult>) | undefined | null): Promise<T | TResult>;
-  /**
-   * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
-   * resolved value cannot be modified from the callback.
-   * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
-   * @returns A Promise for the completion of the callback.
-   */
-  finally(onfinally?: (() => void) | undefined | null): Promise<T>;
-}
-
-// Custom InputTypes
-
-/**
- * User findOne
- */
-export type FindOneUserArgs = {
-  /**
-   * Select specific fields to fetch from the User
-  **/
-  select?: XOR<UserSelect, null>
-  /**
-   * Filter, which User to fetch.
-  **/
-  where: UserWhereUniqueInput
-}
-
-
-/**
- * User findFirst
- */
-export type FindFirstUserArgs = {
-  /**
-   * Select specific fields to fetch from the User
-  **/
-  select?: XOR<UserSelect, null>
-  /**
-   * Filter, which User to fetch.
-  **/
-  where?: UserWhereInput
-  orderBy?: XOR<Enumerable<UserOrderByInput>, UserOrderByInput>
-  cursor?: UserWhereUniqueInput
-  take?: number
-  skip?: number
-  distinct?: Enumerable<UserDistinctFieldEnum>
-}
-
-
-/**
- * User findMany
- */
-export type FindManyUserArgs = {
-  /**
-   * Select specific fields to fetch from the User
-  **/
-  select?: XOR<UserSelect, null>
-  /**
-   * Filter, which Users to fetch.
-  **/
-  where?: UserWhereInput
-  /**
-   * Determine the order of the Users to fetch.
-  **/
-  orderBy?: XOR<Enumerable<UserOrderByInput>, UserOrderByInput>
-  /**
-   * Sets the position for listing Users.
-  **/
-  cursor?: UserWhereUniqueInput
-  /**
-   * The number of Users to fetch. If negative number, it will take Users before the `cursor`.
-  **/
-  take?: number
-  /**
-   * Skip the first `n` Users.
-  **/
-  skip?: number
-  distinct?: Enumerable<UserDistinctFieldEnum>
-}
-
-
-/**
- * User create
- */
-export type UserCreateArgs = {
-  /**
-   * Select specific fields to fetch from the User
-  **/
-  select?: XOR<UserSelect, null>
-  /**
-   * The data needed to create a User.
-  **/
-  data: UserCreateInput
-}
-
-
-/**
- * User update
- */
-export type UserUpdateArgs = {
-  /**
-   * Select specific fields to fetch from the User
-  **/
-  select?: XOR<UserSelect, null>
-  /**
-   * The data needed to update a User.
-  **/
-  data: UserUpdateInput
-  /**
-   * Choose, which User to update.
-  **/
-  where: UserWhereUniqueInput
-}
-
-
-/**
- * User updateMany
- */
-export type UserUpdateManyArgs = {
-  data: UserUpdateManyMutationInput
-  where?: UserWhereInput
-}
-
-
-/**
- * User upsert
- */
-export type UserUpsertArgs = {
-  /**
-   * Select specific fields to fetch from the User
-  **/
-  select?: XOR<UserSelect, null>
-  /**
-   * The filter to search for the User to update in case it exists.
-  **/
-  where: UserWhereUniqueInput
-  /**
-   * In case the User found by the `where` argument doesn't exist, create a new User with this data.
-  **/
-  create: UserCreateInput
-  /**
-   * In case the User was found with the provided `where` argument, update it with this data.
-  **/
-  update: UserUpdateInput
-}
-
-
-/**
- * User delete
- */
-export type UserDeleteArgs = {
-  /**
-   * Select specific fields to fetch from the User
-  **/
-  select?: XOR<UserSelect, null>
-  /**
-   * Filter which User to delete.
-  **/
-  where: UserWhereUniqueInput
-}
-
-
-/**
- * User deleteMany
- */
-export type UserDeleteManyArgs = {
-  where?: UserWhereInput
-}
-
-
-/**
- * User without action
- */
-export type UserArgs = {
-  /**
-   * Select specific fields to fetch from the User
-  **/
-  select?: XOR<UserSelect, null>
-}
-
-
-
-/**
  * Deep Input Types
  */
 
+
+export type UserWhereInput = {
+  AND?: XOR<UserWhereInput, Enumerable<UserWhereInput>>
+  OR?: XOR<UserWhereInput, Enumerable<UserWhereInput>>
+  NOT?: XOR<UserWhereInput, Enumerable<UserWhereInput>>
+  id?: XOR<IntFilter, number>
+  name?: StringNullableFilter | string | null
+  email?: StringNullableFilter | string | null
+  isAdmin?: BoolNullableFilter | boolean | null
+  password?: StringNullableFilter | string | null
+}
+
+export type UserOrderByInput = {
+  id?: SortOrder
+  name?: SortOrder
+  email?: SortOrder
+  isAdmin?: SortOrder
+  password?: SortOrder
+}
+
+export type UserWhereUniqueInput = {
+  id?: number
+  email?: string
+}
 
 export type RestaurantWhereInput = {
   AND?: XOR<RestaurantWhereInput, Enumerable<RestaurantWhereInput>>
@@ -2649,40 +2679,41 @@ export type CustomerWhereInput = {
   NOT?: XOR<CustomerWhereInput, Enumerable<CustomerWhereInput>>
   id?: XOR<IntFilter, number>
   name?: StringNullableFilter | string | null
+  reservationTime_utc?: DateTimeNullableFilter | Date | string | null
+  reservationTime_offset?: StringNullableFilter | string | null
   from_customer?: TableListRelationFilter
 }
 
 export type CustomerOrderByInput = {
   id?: SortOrder
   name?: SortOrder
+  reservationTime_utc?: SortOrder
+  reservationTime_offset?: SortOrder
 }
 
 export type CustomerWhereUniqueInput = {
   id?: number
 }
 
-export type UserWhereInput = {
-  AND?: XOR<UserWhereInput, Enumerable<UserWhereInput>>
-  OR?: XOR<UserWhereInput, Enumerable<UserWhereInput>>
-  NOT?: XOR<UserWhereInput, Enumerable<UserWhereInput>>
-  id?: XOR<IntFilter, number>
-  name?: StringNullableFilter | string | null
-  email?: StringNullableFilter | string | null
-  isAdmin?: BoolNullableFilter | boolean | null
-  password?: StringNullableFilter | string | null
+export type UserCreateInput = {
+  name?: XOR<string, null>
+  email?: XOR<string, null>
+  isAdmin?: XOR<boolean, null>
+  password?: XOR<string, null>
 }
 
-export type UserOrderByInput = {
-  id?: SortOrder
-  name?: SortOrder
-  email?: SortOrder
-  isAdmin?: SortOrder
-  password?: SortOrder
+export type UserUpdateInput = {
+  name?: string | NullableStringFieldUpdateOperationsInput | null
+  email?: string | NullableStringFieldUpdateOperationsInput | null
+  isAdmin?: boolean | NullableBoolFieldUpdateOperationsInput | null
+  password?: string | NullableStringFieldUpdateOperationsInput | null
 }
 
-export type UserWhereUniqueInput = {
-  id?: number
-  email?: string
+export type UserUpdateManyMutationInput = {
+  name?: string | NullableStringFieldUpdateOperationsInput | null
+  email?: string | NullableStringFieldUpdateOperationsInput | null
+  isAdmin?: boolean | NullableBoolFieldUpdateOperationsInput | null
+  password?: string | NullableStringFieldUpdateOperationsInput | null
 }
 
 export type RestaurantCreateInput = {
@@ -2727,37 +2758,22 @@ export type TableUpdateManyMutationInput = {
 
 export type CustomerCreateInput = {
   name?: XOR<string, null>
+  reservationTime_utc?: XOR<Date | string, null>
+  reservationTime_offset?: XOR<string, null>
   from_customer?: TableCreateManyWithoutCustomerInput
 }
 
 export type CustomerUpdateInput = {
   name?: string | NullableStringFieldUpdateOperationsInput | null
+  reservationTime_utc?: Date | string | NullableDateTimeFieldUpdateOperationsInput | null
+  reservationTime_offset?: string | NullableStringFieldUpdateOperationsInput | null
   from_customer?: TableUpdateManyWithoutCustomerInput
 }
 
 export type CustomerUpdateManyMutationInput = {
   name?: string | NullableStringFieldUpdateOperationsInput | null
-}
-
-export type UserCreateInput = {
-  name?: XOR<string, null>
-  email?: XOR<string, null>
-  isAdmin?: XOR<boolean, null>
-  password?: XOR<string, null>
-}
-
-export type UserUpdateInput = {
-  name?: string | NullableStringFieldUpdateOperationsInput | null
-  email?: string | NullableStringFieldUpdateOperationsInput | null
-  isAdmin?: boolean | NullableBoolFieldUpdateOperationsInput | null
-  password?: string | NullableStringFieldUpdateOperationsInput | null
-}
-
-export type UserUpdateManyMutationInput = {
-  name?: string | NullableStringFieldUpdateOperationsInput | null
-  email?: string | NullableStringFieldUpdateOperationsInput | null
-  isAdmin?: boolean | NullableBoolFieldUpdateOperationsInput | null
-  password?: string | NullableStringFieldUpdateOperationsInput | null
+  reservationTime_utc?: Date | string | NullableDateTimeFieldUpdateOperationsInput | null
+  reservationTime_offset?: string | NullableStringFieldUpdateOperationsInput | null
 }
 
 export type IntFilter = {
@@ -2819,10 +2835,15 @@ export type CustomerListRelationFilter = {
   none?: CustomerWhereInput
 }
 
-export type TableCreateManyWithoutRestaurantInput = {
-  create?: XOR<TableCreateWithoutRestaurantInput, Enumerable<TableCreateWithoutRestaurantInput>>
-  connect?: XOR<TableWhereUniqueInput, Enumerable<TableWhereUniqueInput>>
-  connectOrCreate?: XOR<TableCreateOrConnectWithoutrestaurantInput, Enumerable<TableCreateOrConnectWithoutrestaurantInput>>
+export type DateTimeNullableFilter = {
+  equals?: XOR<Date | string, null>
+  in?: XOR<Enumerable<Date> | Enumerable<string>, null>
+  notIn?: XOR<Enumerable<Date> | Enumerable<string>, null>
+  lt?: Date | string
+  lte?: Date | string
+  gt?: Date | string
+  gte?: Date | string
+  not?: Date | string | NestedDateTimeNullableFilter | null
 }
 
 export type NullableStringFieldUpdateOperationsInput = {
@@ -2831,6 +2852,12 @@ export type NullableStringFieldUpdateOperationsInput = {
 
 export type NullableBoolFieldUpdateOperationsInput = {
   set?: XOR<boolean, null>
+}
+
+export type TableCreateManyWithoutRestaurantInput = {
+  create?: XOR<TableCreateWithoutRestaurantInput, Enumerable<TableCreateWithoutRestaurantInput>>
+  connect?: XOR<TableWhereUniqueInput, Enumerable<TableWhereUniqueInput>>
+  connectOrCreate?: XOR<TableCreateOrConnectWithoutrestaurantInput, Enumerable<TableCreateOrConnectWithoutrestaurantInput>>
 }
 
 export type TableUpdateManyWithoutRestaurantInput = {
@@ -2895,6 +2922,10 @@ export type TableCreateManyWithoutCustomerInput = {
   connectOrCreate?: XOR<TableCreateOrConnectWithoutcustomerInput, Enumerable<TableCreateOrConnectWithoutcustomerInput>>
 }
 
+export type NullableDateTimeFieldUpdateOperationsInput = {
+  set?: XOR<Date | string, null>
+}
+
 export type TableUpdateManyWithoutCustomerInput = {
   create?: XOR<TableCreateWithoutCustomerInput, Enumerable<TableCreateWithoutCustomerInput>>
   connect?: XOR<TableWhereUniqueInput, Enumerable<TableWhereUniqueInput>>
@@ -2949,6 +2980,17 @@ export type NestedIntNullableFilter = {
   not?: number | NestedIntNullableFilter | null
 }
 
+export type NestedDateTimeNullableFilter = {
+  equals?: XOR<Date | string, null>
+  in?: XOR<Enumerable<Date> | Enumerable<string>, null>
+  notIn?: XOR<Enumerable<Date> | Enumerable<string>, null>
+  lt?: Date | string
+  lte?: Date | string
+  gt?: Date | string
+  gte?: Date | string
+  not?: Date | string | NestedDateTimeNullableFilter | null
+}
+
 export type TableCreateWithoutRestaurantInput = {
   number?: XOR<number, null>
   seats?: XOR<number, null>
@@ -3001,6 +3043,8 @@ export type RestaurantCreateOrConnectWithouttablesInput = {
 
 export type CustomerCreateWithoutFrom_customerInput = {
   name?: XOR<string, null>
+  reservationTime_utc?: XOR<Date | string, null>
+  reservationTime_offset?: XOR<string, null>
 }
 
 export type CustomerCreateOrConnectWithoutfrom_customerInput = {
@@ -3035,6 +3079,8 @@ export type CustomerScalarWhereInput = {
   NOT?: XOR<CustomerScalarWhereInput, Enumerable<CustomerScalarWhereInput>>
   id?: XOR<IntFilter, number>
   name?: StringNullableFilter | string | null
+  reservationTime_utc?: DateTimeNullableFilter | Date | string | null
+  reservationTime_offset?: StringNullableFilter | string | null
 }
 
 export type CustomerUpsertWithWhereUniqueWithoutFrom_customerInput = {
@@ -3079,6 +3125,8 @@ export type TableUpdateWithoutRestaurantInput = {
 
 export type CustomerUpdateWithoutFrom_customerInput = {
   name?: string | NullableStringFieldUpdateOperationsInput | null
+  reservationTime_utc?: Date | string | NullableDateTimeFieldUpdateOperationsInput | null
+  reservationTime_offset?: string | NullableStringFieldUpdateOperationsInput | null
 }
 
 export type TableUpdateWithoutCustomerInput = {

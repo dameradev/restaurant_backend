@@ -8,6 +8,14 @@ generator client {
   output   = "generated-client"
 }
 
+model User {
+  id       Int      @id @default(autoincrement())
+  name     String?
+  email    String?  @unique
+  isAdmin  Boolean?
+  password String?
+}
+
 model Restaurant {
   id          Int      @id @default(autoincrement())
   name        String?
@@ -27,15 +35,9 @@ model Table {
 }
 
 model Customer {
-  id            Int     @id @default(autoincrement())
-  name          String?
-  from_customer Table[] @relation("Table_customer_many", references: [id])
-}
-
-model User {
-  id       Int      @id @default(autoincrement())
-  name     String?
-  email    String?  @unique
-  isAdmin  Boolean?
-  password String?
+  id                     Int       @id @default(autoincrement())
+  name                   String?
+  reservationTime_utc    DateTime?
+  reservationTime_offset String?
+  from_customer          Table[]   @relation("Table_customer_many", references: [id])
 }
