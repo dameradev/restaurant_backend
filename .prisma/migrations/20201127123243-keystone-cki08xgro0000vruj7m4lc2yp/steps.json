@@ -1,0 +1,107 @@
+{
+  "version": "0.3.14-fixed",
+  "steps": [
+    {
+      "tag": "CreateField",
+      "model": "Table",
+      "field": "customer",
+      "type": "Customer",
+      "arity": "List"
+    },
+    {
+      "tag": "CreateDirective",
+      "location": {
+        "path": {
+          "tag": "Field",
+          "model": "Table",
+          "field": "customer"
+        },
+        "directive": "relation"
+      }
+    },
+    {
+      "tag": "CreateArgument",
+      "location": {
+        "tag": "Directive",
+        "path": {
+          "tag": "Field",
+          "model": "Table",
+          "field": "customer"
+        },
+        "directive": "relation"
+      },
+      "argument": "",
+      "value": "\"Table_customer_many\""
+    },
+    {
+      "tag": "CreateArgument",
+      "location": {
+        "tag": "Directive",
+        "path": {
+          "tag": "Field",
+          "model": "Table",
+          "field": "customer"
+        },
+        "directive": "relation"
+      },
+      "argument": "references",
+      "value": "[id]"
+    },
+    {
+      "tag": "DeleteField",
+      "model": "Table",
+      "field": "reservationTime_utc"
+    },
+    {
+      "tag": "DeleteField",
+      "model": "Table",
+      "field": "reservationTime_offset"
+    },
+    {
+      "tag": "CreateField",
+      "model": "Customer",
+      "field": "from_customer",
+      "type": "Table",
+      "arity": "List"
+    },
+    {
+      "tag": "CreateDirective",
+      "location": {
+        "path": {
+          "tag": "Field",
+          "model": "Customer",
+          "field": "from_customer"
+        },
+        "directive": "relation"
+      }
+    },
+    {
+      "tag": "CreateArgument",
+      "location": {
+        "tag": "Directive",
+        "path": {
+          "tag": "Field",
+          "model": "Customer",
+          "field": "from_customer"
+        },
+        "directive": "relation"
+      },
+      "argument": "",
+      "value": "\"Table_customer_many\""
+    },
+    {
+      "tag": "CreateArgument",
+      "location": {
+        "tag": "Directive",
+        "path": {
+          "tag": "Field",
+          "model": "Customer",
+          "field": "from_customer"
+        },
+        "directive": "relation"
+      },
+      "argument": "references",
+      "value": "[id]"
+    }
+  ]
+}

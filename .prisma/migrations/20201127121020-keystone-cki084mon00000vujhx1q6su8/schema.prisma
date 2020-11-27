@@ -1,5 +1,5 @@
 datasource postgresql {
-  url      = env("DATABASE_URL")
+  url = "***"
   provider = "postgresql"
 }
 
@@ -8,34 +8,27 @@ generator client {
   output   = "generated-client"
 }
 
+model User {
+  id         Int          @id @default(autoincrement())
+  name       String?
+  email      String?      @unique
+  isAdmin    Boolean?
+  password   String?
+  from_users Restaurant[] @relation("Restaurant_users_many", references: [id])
+}
+
 model Restaurant {
   id          Int      @id @default(autoincrement())
   name        String?
   description String?
   isActive    Boolean?
   tables      Table[]  @relation("Tablerestaurant")
+  users       User[]   @relation("Restaurant_users_many", references: [id])
 }
 
 model Table {
   id           Int         @id @default(autoincrement())
-  number       Int?        @unique @default(autoincrement())
-  seats        Int?
-  description  String?
+  number       Int?
   restaurant   Restaurant? @relation("Tablerestaurant", fields: [restaurantId], references: [id])
   restaurantId Int?        @map("restaurant")
-  customer     Customer[]  @relation("Table_customer_many", references: [id])
-}
-
-model Customer {
-  id            Int     @id @default(autoincrement())
-  name          String?
-  from_customer Table[] @relation("Table_customer_many", references: [id])
-}
-
-model User {
-  id       Int      @id @default(autoincrement())
-  name     String?
-  email    String?  @unique
-  isAdmin  Boolean?
-  password String?
 }

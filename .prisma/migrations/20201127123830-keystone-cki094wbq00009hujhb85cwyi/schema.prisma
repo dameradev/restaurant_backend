@@ -1,11 +1,19 @@
 datasource postgresql {
-  url      = env("DATABASE_URL")
+  url = "***"
   provider = "postgresql"
 }
 
 generator client {
   provider = "prisma-client-js"
   output   = "generated-client"
+}
+
+model User {
+  id       Int      @id @default(autoincrement())
+  name     String?
+  email    String?  @unique
+  isAdmin  Boolean?
+  password String?
 }
 
 model Restaurant {
@@ -23,19 +31,4 @@ model Table {
   description  String?
   restaurant   Restaurant? @relation("Tablerestaurant", fields: [restaurantId], references: [id])
   restaurantId Int?        @map("restaurant")
-  customer     Customer[]  @relation("Table_customer_many", references: [id])
-}
-
-model Customer {
-  id            Int     @id @default(autoincrement())
-  name          String?
-  from_customer Table[] @relation("Table_customer_many", references: [id])
-}
-
-model User {
-  id       Int      @id @default(autoincrement())
-  name     String?
-  email    String?  @unique
-  isAdmin  Boolean?
-  password String?
 }
