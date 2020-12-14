@@ -17,11 +17,14 @@ model User {
 }
 
 model Restaurant {
-  id          Int      @id @default(autoincrement())
-  name        String?
-  description String?
-  isActive    Boolean?
-  tables      Table[]  @relation("Tablerestaurant")
+  id               Int      @id @default(autoincrement())
+  name             String?
+  slogan           String?
+  description      String?
+  descriptionTitle String?
+  reserveText      String?
+  isActive         Boolean?
+  tables           Table[]  @relation("Tablerestaurant")
 }
 
 model Table {

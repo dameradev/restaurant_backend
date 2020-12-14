@@ -7,9 +7,21 @@ module.exports = {
       isRequired: true,
     },
 
+    slogan: {
+      type: Text,
+    },
+
     description: {
       type: Text,
       isRequired: true,
+    },
+
+    descriptionTitle: {
+      type: Text,
+    },
+
+    reserveText: {
+      type: Text,
     },
     isActive: {
       type: Checkbox,

@@ -474,7 +474,10 @@ export declare type UserDistinctFieldEnum = (typeof UserDistinctFieldEnum)[keyof
 export declare const RestaurantDistinctFieldEnum: {
   id: 'id',
   name: 'name',
+  slogan: 'slogan',
   description: 'description',
+  descriptionTitle: 'descriptionTitle',
+  reserveText: 'reserveText',
   isActive: 'isActive'
 };
 
@@ -1006,7 +1009,10 @@ export type UserArgs = {
 export type Restaurant = {
   id: number
   name: string | null
+  slogan: string | null
   description: string | null
+  descriptionTitle: string | null
+  reserveText: string | null
   isActive: boolean | null
 }
 
@@ -1079,7 +1085,10 @@ export type GetRestaurantAggregateScalarType<T extends any> = {
 export type RestaurantSelect = {
   id?: boolean
   name?: boolean
+  slogan?: boolean
   description?: boolean
+  descriptionTitle?: boolean
+  reserveText?: boolean
   isActive?: boolean
   tables?: boolean | FindManyTableArgs
 }
@@ -2631,7 +2640,10 @@ export type RestaurantWhereInput = {
   NOT?: XOR<RestaurantWhereInput, Enumerable<RestaurantWhereInput>>
   id?: XOR<IntFilter, number>
   name?: StringNullableFilter | string | null
+  slogan?: StringNullableFilter | string | null
   description?: StringNullableFilter | string | null
+  descriptionTitle?: StringNullableFilter | string | null
+  reserveText?: StringNullableFilter | string | null
   isActive?: BoolNullableFilter | boolean | null
   tables?: TableListRelationFilter
 }
@@ -2639,7 +2651,10 @@ export type RestaurantWhereInput = {
 export type RestaurantOrderByInput = {
   id?: SortOrder
   name?: SortOrder
+  slogan?: SortOrder
   description?: SortOrder
+  descriptionTitle?: SortOrder
+  reserveText?: SortOrder
   isActive?: SortOrder
 }
 
@@ -2718,21 +2733,30 @@ export type UserUpdateManyMutationInput = {
 
 export type RestaurantCreateInput = {
   name?: XOR<string, null>
+  slogan?: XOR<string, null>
   description?: XOR<string, null>
+  descriptionTitle?: XOR<string, null>
+  reserveText?: XOR<string, null>
   isActive?: XOR<boolean, null>
   tables?: TableCreateManyWithoutRestaurantInput
 }
 
 export type RestaurantUpdateInput = {
   name?: string | NullableStringFieldUpdateOperationsInput | null
+  slogan?: string | NullableStringFieldUpdateOperationsInput | null
   description?: string | NullableStringFieldUpdateOperationsInput | null
+  descriptionTitle?: string | NullableStringFieldUpdateOperationsInput | null
+  reserveText?: string | NullableStringFieldUpdateOperationsInput | null
   isActive?: boolean | NullableBoolFieldUpdateOperationsInput | null
   tables?: TableUpdateManyWithoutRestaurantInput
 }
 
 export type RestaurantUpdateManyMutationInput = {
   name?: string | NullableStringFieldUpdateOperationsInput | null
+  slogan?: string | NullableStringFieldUpdateOperationsInput | null
   description?: string | NullableStringFieldUpdateOperationsInput | null
+  descriptionTitle?: string | NullableStringFieldUpdateOperationsInput | null
+  reserveText?: string | NullableStringFieldUpdateOperationsInput | null
   isActive?: boolean | NullableBoolFieldUpdateOperationsInput | null
 }
 
@@ -3032,7 +3056,10 @@ export type TableUpsertWithWhereUniqueWithoutRestaurantInput = {
 
 export type RestaurantCreateWithoutTablesInput = {
   name?: XOR<string, null>
+  slogan?: XOR<string, null>
   description?: XOR<string, null>
+  descriptionTitle?: XOR<string, null>
+  reserveText?: XOR<string, null>
   isActive?: XOR<boolean, null>
 }
 
@@ -3054,7 +3081,10 @@ export type CustomerCreateOrConnectWithoutfrom_customerInput = {
 
 export type RestaurantUpdateWithoutTablesInput = {
   name?: string | NullableStringFieldUpdateOperationsInput | null
+  slogan?: string | NullableStringFieldUpdateOperationsInput | null
   description?: string | NullableStringFieldUpdateOperationsInput | null
+  descriptionTitle?: string | NullableStringFieldUpdateOperationsInput | null
+  reserveText?: string | NullableStringFieldUpdateOperationsInput | null
   isActive?: boolean | NullableBoolFieldUpdateOperationsInput | null
 }
 

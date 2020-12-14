@@ -3,6 +3,7 @@ const { AdminUIApp } = require("@keystonejs/app-admin-ui");
 const { keystone, authStrategy } = require("./keystone");
 
 const { reserveTable } = require("./resolvers/Mutation");
+// const { reserveTable } = require("./resolvers/Mutation");
 
 const PROJECT_NAME = "backend";
 
@@ -13,13 +14,14 @@ const CustomerSchema = require("./lists/Customer.js");
 keystone.extendGraphQLSchema({
   types: [
     {
-      type: "type reserveTableOutput { tableId: Int!, customerName: String! }",
+      type:
+        "type reserveTableOutput { tableId: Int!, customerName: String!, reservationTime: DateTime}",
     },
   ],
   mutations: [
     {
       schema:
-        "reserveTable(tableId: Int, customerName: String): reserveTableOutput",
+        "reserveTable(tableId: Int, customerName: String, reservationTime: DateTime): reserveTableOutput",
       resolver: reserveTable,
     },
   ],

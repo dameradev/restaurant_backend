@@ -1,0 +1,26 @@
+{
+  "version": "0.3.14-fixed",
+  "steps": [
+    {
+      "tag": "CreateField",
+      "model": "Restaurant",
+      "field": "slogan",
+      "type": "String",
+      "arity": "Optional"
+    },
+    {
+      "tag": "CreateField",
+      "model": "Restaurant",
+      "field": "descriptionTitle",
+      "type": "String",
+      "arity": "Optional"
+    },
+    {
+      "tag": "CreateField",
+      "model": "Restaurant",
+      "field": "reserveText",
+      "type": "String",
+      "arity": "Optional"
+    }
+  ]
+}
