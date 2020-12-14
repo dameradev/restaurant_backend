@@ -1,7 +1,7 @@
 // const  Table = require('')
 const { Table } = require("../keystone");
 
-const reserveTable = async (_, { tableId, customerName }) => {
+const reserveTable = async (_, { tableId, customerName, reservationTime }) => {
   const { adapter } = Table;
 
   console.log(tableId);
@@ -10,7 +10,10 @@ const reserveTable = async (_, { tableId, customerName }) => {
     where: { id: tableId },
     data: {
       customer: {
-        create: { name: customerName, reservationTime_utc: new Date() },
+        create: {
+          name: customerName,
+          reservationTime: new Date(`${reservationTime}:00`),
+        },
       },
     },
   });

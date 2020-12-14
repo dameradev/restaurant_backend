@@ -3,6 +3,7 @@ const {
   Checkbox,
   Relationship,
   DateTime,
+  DateTimeUtc,
 } = require("@keystonejs/fields");
 
 module.exports = {
@@ -12,10 +13,10 @@ module.exports = {
       isRequired: true,
     },
     reservationTime: {
-      type: DateTime,
-      format: "dd/MM/yyyy HH:mm O",
-      // yearRangeFrom: 2020,
-      // yearRangeTo: 2021,
+      type: DateTimeUtc,
+      // format: "dd/MM/yyyy HH:mm",
+      // yearRangeFrom: 1901,
+      // yearRangeTo: 2018,
       // yearPickerType: "auto",
     },
   },

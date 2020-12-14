@@ -38,9 +38,8 @@ model Table {
 }
 
 model Customer {
-  id                     Int       @id @default(autoincrement())
-  name                   String?
-  reservationTime_utc    DateTime?
-  reservationTime_offset String?
-  from_customer          Table[]   @relation("Table_customer_many", references: [id])
+  id              Int       @id @default(autoincrement())
+  name            String?
+  reservationTime DateTime?
+  from_customer   Table[]   @relation("Table_customer_many", references: [id])
 }

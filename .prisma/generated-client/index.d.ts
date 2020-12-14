@@ -498,8 +498,7 @@ export declare type TableDistinctFieldEnum = (typeof TableDistinctFieldEnum)[key
 export declare const CustomerDistinctFieldEnum: {
   id: 'id',
   name: 'name',
-  reservationTime_utc: 'reservationTime_utc',
-  reservationTime_offset: 'reservationTime_offset'
+  reservationTime: 'reservationTime'
 };
 
 export declare type CustomerDistinctFieldEnum = (typeof CustomerDistinctFieldEnum)[keyof typeof CustomerDistinctFieldEnum]
@@ -2091,8 +2090,7 @@ export type TableArgs = {
 export type Customer = {
   id: number
   name: string | null
-  reservationTime_utc: Date | null
-  reservationTime_offset: string | null
+  reservationTime: Date | null
 }
 
 
@@ -2164,8 +2162,7 @@ export type GetCustomerAggregateScalarType<T extends any> = {
 export type CustomerSelect = {
   id?: boolean
   name?: boolean
-  reservationTime_utc?: boolean
-  reservationTime_offset?: boolean
+  reservationTime?: boolean
   from_customer?: boolean | FindManyTableArgs
 }
 
@@ -2694,16 +2691,14 @@ export type CustomerWhereInput = {
   NOT?: XOR<CustomerWhereInput, Enumerable<CustomerWhereInput>>
   id?: XOR<IntFilter, number>
   name?: StringNullableFilter | string | null
-  reservationTime_utc?: DateTimeNullableFilter | Date | string | null
-  reservationTime_offset?: StringNullableFilter | string | null
+  reservationTime?: DateTimeNullableFilter | Date | string | null
   from_customer?: TableListRelationFilter
 }
 
 export type CustomerOrderByInput = {
   id?: SortOrder
   name?: SortOrder
-  reservationTime_utc?: SortOrder
-  reservationTime_offset?: SortOrder
+  reservationTime?: SortOrder
 }
 
 export type CustomerWhereUniqueInput = {
@@ -2782,22 +2777,19 @@ export type TableUpdateManyMutationInput = {
 
 export type CustomerCreateInput = {
   name?: XOR<string, null>
-  reservationTime_utc?: XOR<Date | string, null>
-  reservationTime_offset?: XOR<string, null>
+  reservationTime?: XOR<Date | string, null>
   from_customer?: TableCreateManyWithoutCustomerInput
 }
 
 export type CustomerUpdateInput = {
   name?: string | NullableStringFieldUpdateOperationsInput | null
-  reservationTime_utc?: Date | string | NullableDateTimeFieldUpdateOperationsInput | null
-  reservationTime_offset?: string | NullableStringFieldUpdateOperationsInput | null
+  reservationTime?: Date | string | NullableDateTimeFieldUpdateOperationsInput | null
   from_customer?: TableUpdateManyWithoutCustomerInput
 }
 
 export type CustomerUpdateManyMutationInput = {
   name?: string | NullableStringFieldUpdateOperationsInput | null
-  reservationTime_utc?: Date | string | NullableDateTimeFieldUpdateOperationsInput | null
-  reservationTime_offset?: string | NullableStringFieldUpdateOperationsInput | null
+  reservationTime?: Date | string | NullableDateTimeFieldUpdateOperationsInput | null
 }
 
 export type IntFilter = {
@@ -3070,8 +3062,7 @@ export type RestaurantCreateOrConnectWithouttablesInput = {
 
 export type CustomerCreateWithoutFrom_customerInput = {
   name?: XOR<string, null>
-  reservationTime_utc?: XOR<Date | string, null>
-  reservationTime_offset?: XOR<string, null>
+  reservationTime?: XOR<Date | string, null>
 }
 
 export type CustomerCreateOrConnectWithoutfrom_customerInput = {
@@ -3109,8 +3100,7 @@ export type CustomerScalarWhereInput = {
   NOT?: XOR<CustomerScalarWhereInput, Enumerable<CustomerScalarWhereInput>>
   id?: XOR<IntFilter, number>
   name?: StringNullableFilter | string | null
-  reservationTime_utc?: DateTimeNullableFilter | Date | string | null
-  reservationTime_offset?: StringNullableFilter | string | null
+  reservationTime?: DateTimeNullableFilter | Date | string | null
 }
 
 export type CustomerUpsertWithWhereUniqueWithoutFrom_customerInput = {
@@ -3155,8 +3145,7 @@ export type TableUpdateWithoutRestaurantInput = {
 
 export type CustomerUpdateWithoutFrom_customerInput = {
   name?: string | NullableStringFieldUpdateOperationsInput | null
-  reservationTime_utc?: Date | string | NullableDateTimeFieldUpdateOperationsInput | null
-  reservationTime_offset?: string | NullableStringFieldUpdateOperationsInput | null
+  reservationTime?: Date | string | NullableDateTimeFieldUpdateOperationsInput | null
 }
 
 export type TableUpdateWithoutCustomerInput = {

@@ -15,13 +15,13 @@ keystone.extendGraphQLSchema({
   types: [
     {
       type:
-        "type reserveTableOutput { tableId: Int!, customerName: String!, reservationTime: DateTime}",
+        "type reserveTableOutput { tableId: Int!, customerName: String!, reservationTime: String}",
     },
   ],
   mutations: [
     {
       schema:
-        "reserveTable(tableId: Int, customerName: String, reservationTime: DateTime): reserveTableOutput",
+        "reserveTable(tableId: Int, customerName: String, reservationTime: String): reserveTableOutput",
       resolver: reserveTable,
     },
   ],
